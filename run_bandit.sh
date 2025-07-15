@@ -12,7 +12,8 @@ fi
 # Make sure we are using the latest version
 docker pull secfigo/bandit:latest
 
-docker run --rm \
-    --volume $(pwd):/src \
-    --volume "$REPORT_DIRECTORY":/report \
-    secfigo/bandit:latest
+docker run --rm --privileged \
+  --user 0 \
+  -v /var/lib/jenkins/workspace/sonarscan:/src \
+  -v /var/lib/jenkins/workspace/sonarscan/report:/report \
+  secfigo/bandit:latest
